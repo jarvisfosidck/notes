@@ -1,0 +1,61 @@
+<html>
+<body>
+
+<img id="image" src="exploed-diagram.jpg" usemap="#imagemap" height="595" />
+
+
+<map name="imagemap">
+</map>
+
+<script>
+
+coords = [],cnt = 0;
+function clickMap(e) {
+
+    coords.push( {
+        x : e.clientX,
+        y : e.clientY,
+        itemNumber : window.prompt("Enter Item Number",0),
+        oWidth : 542,
+        oHeight : 688,
+        call : doScroll//"scrollClickAction"
+    }
+);
+
+}
+function addMap(obj) {
+
+    var list = JSON.parse(obj);
+    var img = document.getElementById("image");
+
+    for (var i in list) {
+        var o = list[i];
+        wr = img.clientWidth / o.oWidth;
+        hr = img.clientHeight / o.oHeight;
+        var m = document.querySelector("map");
+        var a = document.createElement("area");
+        a.shape = "circle";
+        //a.coords = "40,40,80";
+        a.coords = [parseInt(o.x*wr,10),parseInt(o.y*hr,10),parseInt(16*wr)];
+        a.addEventListener("click",doScroll.bind(o));
+        m.appendChild(a);
+    }
+
+}
+function doScroll() {
+    console.log(this);
+    alert('scrolll around')
+}
+
+
+document.addEventListener('click',clickMap,false);
+
+
+
+</script>
+
+
+
+</body>
+
+</html>

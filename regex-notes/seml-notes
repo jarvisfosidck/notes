@@ -1,0 +1,15 @@
+sed -nE '1h;1!H;${;g;s/(<p.+option".+\/p>)/lookHere\1/g;p;}' templates/admin/add_customer.hbs > test.hbs
+
+sed -nE '1h;1!H;${;g;s/(<p.+option".+\/p>)(<input[a-zA-Z0-9_=+ "]+>)/\2lookHere\1/g;p;}' templates/admin/add_customer.hbs > test.hbs
+sed -nE '1h;1!H;${;g;s/(<p.+option".+\/p>)[ ]+(<input[a-zA-Z0-9_=+ "]+>)/\2lookHere\1/g;p;}' templates/admin/add_customer.hbs > test.hbs
+sed -nE '1h;1!H;${;g;s/(<p.+option".+\/p>)\s(<input[a-zA-Z0-9_=+ "]+>)/\2lookHere\1/g;p;}' templates/admin/add_customer.hbs > test.hbs
+
+
+******find p ahead of input and replace*******
+sed -nE '1h;1!H;${;g;s/(<p.+option".+\/p>).+(<input[a-zA-Z0-9_=+ "]+>)/\2===++N++===\1/g;p;}' templates/admin/add_customer.hbs > test.hbs
+
+******match p ahead of input no change ********
+sed -nE '1h;1!H;${;g;s/(<p.+option".+\/p>).+(<input[a-zA-Z0-9_=+ "]+>)/&/g;p;}' templates/admin/add_customer.hbs > test.hbs
+
+
+grep -irl 'p class=option' public/src/templates/ | while read i; do open -a textwrangler $i;done;

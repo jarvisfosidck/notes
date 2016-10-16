@@ -1,0 +1,10 @@
+
+mac iOS / Unix command line to rename all files in folder
+
+//use sed for replace
+for f in *; do mv "$f" `echo $f | sed  's/ /-/g' `; done
+
+
+
+//use tr to convert upper to lower case
+for i in *; do mv "$i" "$(echo $i|tr A-Z a-z)"; done
