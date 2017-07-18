@@ -1,0 +1,43 @@
+<p>
+  a long sentence about the world.
+</p>
+
+<h2>{{master}} controls {{data.length}} heroes</h2>
+    <data-child *ngFor="let n of data"
+      [data]="n"
+      [master]="master">
+    </data-child>
+
+    <h3>Countdown to Liftoff (via local variable)</h3>
+    <button (click)="timer.start()">Start</button>
+    <button (click)="timer.stop()">Stop</button>
+    <div class="seconds">{{timer.seconds}}</div>
+    <countdown-timer #timer></countdown-timer>
+
+
+    <h3>Countdown to Liftoff (via ViewChild)</h3>
+    <button (click)="start()">Start</button>
+    <button (click)="stop()">Stop</button>
+    <div class="seconds">{{ timer.seconds }}</div>
+    <countdown-timer></countdown-timer>
+<hr />
+    <h2>Should mankind colonize the Universe?</h2>
+    <h3>Agree: {{agreed}}, Disagree: {{disagreed}}</h3>
+    <voter *ngFor="let voter of voters"
+      [name]="voter"
+      (onVoted)="onVoted($event)">
+    </voter>
+
+
+<hr />
+
+<h2>Mission Control</h2>
+    <button (click)="announce()">Announce mission</button>
+    <my-astronaut *ngFor="let astronaut of astronauts"
+      [astronaut]="astronaut">
+    </my-astronaut>
+    <h3>History</h3>
+    <ul>
+      <li *ngFor="let event of history">{{event}}</li>
+    </ul>
+    

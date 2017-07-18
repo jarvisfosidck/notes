@@ -8,3 +8,42 @@ for f in *; do mv "$f" `echo $f | sed  's/ /-/g' `; done
 
 //use tr to convert upper to lower case
 for i in *; do mv "$i" "$(echo $i|tr A-Z a-z)"; done
+
+
+
+for f in *; do mv "$f" `echo $f | sed  ’s/a-zA-Z0-0/‘’/g’ `; done
+
+for f in *; do mv "$f" `echo $f | sed 's/[^a-zA-Z0-9.]//g’ `; done
+
+find . -name "*[^a-zA-Z0-9.]*" -exec mv {} destDir  \;
+moves by regex 
+
+for i in $(cat shift-qa-filelist.txt); do cp newNames/$i qa_files/$i; done;
+copies from file where each line is filename 
+
+#email:
+echo "hello" | mail -s "test" jarvis@spiredigital.com;
+
+ #tells if things are open on a port (for trouble shoot apache)
+ sudo lsof -P -n -iTCP -sTCP:LISTEN
+ #stops instances of apache runing:
+ sudo apachectl stop;
+ 
+ mysql import database
+ mysql -u root -p augustine_institute < augustine_institute-2017-07-12.sql;
+
+you need a very spesific version of PHP.
+to use php 7.0.2 from homestead / vagrant box you can run the following after homestead ssh;
+(php 7.0.2 is supported by current magentoV2)
+
+sudo add-apt-repository -y ppa:ondrej/php
+sudo apt-get update
+#if you have done this already it might error and skip to the php update.
+it is as follows:
+sudo apt-get install -y php7.0-fpm php7.0-mysql php7.0-cli php7.0-mcrypt php7.0-curl php7.0-gd php7.0-intl php7.0-xsl php7.0-zip php7.0-mbstring
+
+if you have multipul versions of php installed you can use the command (it seems);
+sudo update-alternatives --set php /usr/bin/php7.1
+sudo update-alternatives --set phar /usr/bin/phar7.1
+sudo update-alternatives --set phar.phar /usr/bin/phar.phar7.1
+php -v should yield 7.0.2,7.0.?~7.0.6;

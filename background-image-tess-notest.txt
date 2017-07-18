@@ -1,0 +1,5 @@
+rotate 45deg
+crop a vertical repeating section (about 5 rows) and include columns at a symmetry point
+copy and paste so this matches up until you have a square
+rotate this square 45 deg
+then cut into quarters and fill in to make a larger 

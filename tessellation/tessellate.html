@@ -1,0 +1,151 @@
+<html>
+<style>
+
+</style>
+<body>
+
+  <div id="tessArea"></div>
+
+<script type="text/javascript">
+
+
+var tess = (function() {
+  return {
+      offset : [0,0],
+      col : 0,
+      cnt2 : 0,
+      p : document.getElementById("tessArea"),
+      svgHeight: (72*16),
+      svgWidth: (72*16),
+
+    setupSvg : function() {
+
+        if (this.svg) {
+            this.svg.parentNode.removeChild(this.svg)
+        }
+
+        var params = {};
+        var xmlns="http://www.w3.org/2000/svg"
+        var svg = document.createElementNS(xmlns,'svg');
+        svg.style.height = this.svgHeight + "px";
+        svg.style.width = this.svgWidth + "px";
+
+        this.xmlns = xmlns;
+        this.p.appendChild(svg);
+        this.params = params;
+        this.svg = svg;
+    },
+    _append: function(c) {
+        this.svg.appendChild(c);
+    },
+    _rec: function(attrs) {
+      var c = document.createElementNS(this.xmlns,"rect")
+      for (var a in attrs) {
+        c.setAttributeNS(null, a,attrs[a]);
+      }
+      return c;
+    },
+    _path: function(attrs) {
+      var c = document.createElementNS(this.xmlns,"path")
+      for (var a in attrs) {
+        c.setAttributeNS(null, a,attrs[a]);
+      }
+      return c;
+    },
+    _svg_el: function(name, attrs) {
+        var c = document.createElementNS(this.xmlns,name)
+      for (var a in attrs) {
+        c.setAttributeNS(null, a,attrs[a]);
+      }
+      return c;
+    }
+  }
+});
+var $t = new tess;
+
+$t.setupSvg();
+
+var a1 = a2 = a3 = a4 = 25;
+var os = 3;
+//
+var r = $t._path(params);
+$t._append(r);
+
+function add(n) {
+  return n + os;
+}
+var offset = 33;
+function moveNext(n) {
+  return n + offset;
+}
+var s = [10,10];
+
+
+var p1s;
+var p2s;
+function setOrigin() {
+  p1s = [s[0], s[1], (s[0]+a1), s[1], s[0], (s[1]+a2)];
+  p2s = [s[0]+a2,s[1], s[0], s[1]+a2, a2+s[0],a2+s[1]];
+}
+setOrigin();
+var p2s = p2s.map(add);
+var o_p1s = p1s, o_p2s = p2s;
+function getPaths(p1s, p2s) {
+  return ["M"+p1s[0]+" "+p1s[1]+" L "+ p1s[2] +" "+p1s[3]+" L "+p1s[4]+" "+p1s[5]+" Z"
+    ,p2 = "M"+p2s[0]+" "+p2s[1]+" L "+p2s[2]+" "+p2s[3]+" L "+p2s[4]+" "+p2s[5]+" Z"
+  ]
+}
+var paths = getPaths(p1s, p2s);
+//var p1 = "M50 50 L 75 50 L 50 75 Z";
+
+var params = {
+  'fill' : '#282828'
+  ,'fill-opacity' : 0.5
+  ,'stroke' : 'none'
+  ,'d' : paths[0]
+  ,'class' : ""
+}
+// var r = $t._path(params);
+// $t._append(r);
+// //params.d = "M80 55 L 55 80 L 80 80 Z"
+// params.d = paths[1];
+// var r = $t._path(params);
+// $t._append(r);
+
+var i = -1;
+function oneDiag() {
+  while (i < 10) {
+
+    paths = getPaths(p1s,p2s);
+    params.d = paths[0];;
+    var r = $t._path(params);
+    $t._append(r);
+
+    params.d = paths[1];;
+    var r = $t._path(params);
+    $t._append(r);
+    p1s = p1s.map(moveNext);
+    p2s = p2s.map(moveNext);
+    i++;
+
+  }
+}
+oneDiag();
+function drawNextDiag() {
+
+  s = [s[0]+offset,s[1]];
+  setOrigin();
+  p2s = p2s.map(add);
+  i = -1;
+  oneDiag();
+
+}
+var cols = 0;
+while (cols < 10) {
+  drawNextDiag();
+  cols++;
+}
+
+</script>
+
+</body>

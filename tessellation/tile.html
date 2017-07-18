@@ -1,0 +1,118 @@
+<html>
+<style>
+#tessArea svg g {
+  width:200px;
+  opacity: 0.8;
+
+}
+svg {
+  background-color: #f3f3f3;
+  /*background-color: #d83d1d;*/
+}
+
+</style>
+<body>
+
+  <div id="tessArea">
+    <svg version="1.1" id="Layer_1" width="2167" height="2108" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" xml:space="preserve">
+      <style type="text/css">
+
+    	.st0{fill:none;stroke:#000;stroke-miterlimit:10;stroke-width:0.25}
+
+      </style>
+      <g id="one">
+      <path class="st0" d="M1.7 47C-3.7 25.8 9.8 6 31.4 1.2c2-0.4 4.2-0.7 6.3-0.7 28.8 0 57.6 0 86.5 0 0.9 0 1.7 0.2 2.6 0.2L53.5 74.3c-0.9 1-2.2 2-3.5 2.1C28.1 78.4 7.9 71.8 1.7 47z"/>
+      <path class="st0" d="M132.2 106.9c-2 0.4-4.2 0.7-6.3 0.7 -28.8 0-57.6 0-86.5 0 -0.9 0-1.7-0.2-2.6-0.2l73.2-73.6c0.9-1 2.2-2 3.5-2.1 22-2 42.2 4.6 48.4 29.4C167.3 82.3 153.9 102.2 132.2 106.9z"/>
+      </g>
+<rect id="tessBox" x="1999.5" y="1999.5" width="165" height="109" fill="none" stroke="blue" stroke-weight="5"/>
+        <!--     <circle id="rc" r="10"/> -->
+    </svg>
+
+  </div>
+
+<script type="text/javascript">
+var base = [2000,2000];
+var g_base = [1999.5,1999.5];
+var offset = [86,86];
+var xToggle = -1;
+var yToggle = -1;
+function get_tranString(x,y) {
+  return 'translate('+x+','+y+')';
+}
+
+var row_offset = [86,114.59333333];
+
+var g = document.getElementById("one");
+g.setAttribute('transform', 'translate(2000,2000)')
+//set first item in col
+//dulplicate and create a diag col of n itesm
+var svg = document.querySelector("svg");
+var gc = g.cloneNode(true);
+var cnt = 0;
+function makeDiag(new_base) {
+
+  while (cnt < 15) {
+    gc = g.cloneNode(true);
+    gc.id = "item-"+cnt;
+    var new_trans = [(offset[0] * cnt) + new_base[0], new_base[1] - (offset[1] * cnt) ];
+    var tstr = get_tranString(new_trans[0],new_trans[1]);
+    gc.setAttribute('transform', tstr);
+    svg.appendChild(gc);
+    cnt++;
+
+  }
+}
+makeDiag(base);
+//set a new base and repeat about;
+function new_col() {
+  var col_cnt = 0;
+  while (col_cnt < 15) {
+    new_base = [base[0] - (row_offset[0] * col_cnt) , base[1] - (row_offset[1] * col_cnt) ];
+    cnt = -1 * col_cnt;
+    makeDiag(new_base);
+    col_cnt++;
+  }
+}
+new_col();
+
+//draw a box to take the tesselation from
+var box = document.getElementById("tessBox");
+var xcol = 13;
+var ycol = 9;
+var dShift = [(offset[0] * ycol) + g_base[0], g_base[1] - (offset[1] * ycol) ];
+
+dShift [base[0] - (row_offset[0] * ycol) , base[1] - (row_offset[1] * ycol) ];
+
+var bShift = [g_base[0] - (row_offset[0] * xcol) , g_base[1] - (row_offset[1] * xcol) ];
+
+var ht = 25
+var pnt = [bShift[0] - g_base[0] - 90, bShift[1] - g_base[1] - 35];
+var tstr = get_tranString(pnt[0],pnt[1]);
+//var rstr = ' rotate(0 '+((2167 + pnt[0]) + (0*165) ) +' '+(2108 + pnt[1] + (0*109))+')';
+
+
+
+box.setAttribute('transform', tstr );
+box.setAttribute('width', (165 * 7) + 54);
+box.setAttribute('height', (109 * 3.5) + ht);
+
+// var rc = document.getElementById("rc");
+// rc.setAttribute('cx',(2167 + pnt[0] + (0*165)));
+// rc.setAttribute('cy',(2108 + pnt[1] + (0*109)));
+// rc.setAttribute('fill', "yellow")
+
+svg.appendChild(box);
+
+
+// var g3 = g.cloneNode(true);
+// g3.id = "three";
+// g3.setAttribute('transform', 'translate(208, 184)')
+// var svg = document.querySelector("svg");
+// svg.appendChild(g3);
+
+
+
+
+</script>
+
+</body>
